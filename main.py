@@ -1,7 +1,16 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
+from database import init_db
 import uvicorn
 
-app = FastAPI(title="RAG PDF Assistant")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("staring up and checking database")
+    await init_db()
+    yield # The server runs here
+    print("Shutting down...")
+
+app = FastAPI(title="RAG Document QA", lifespan=lifespan)
 
 @app.get("/")
 async def root():
