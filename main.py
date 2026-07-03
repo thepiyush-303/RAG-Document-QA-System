@@ -1,10 +1,15 @@
 from fastapi import FastAPI, UploadFile, Form, File
+from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 from database import init_db
 import uvicorn
 from ingestion import ingest_pdf
 from pydantic import BaseModel
 from retrieval import get_top_chunks, ask_llm
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+FRONTEND_DIR = BASE_DIR / "frontend"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -14,6 +19,9 @@ async def lifespan(app: FastAPI):
     print("Shutting down...")
 
 app = FastAPI(title="RAG Document QA", lifespan=lifespan)
+
+if FRONTEND_DIR.exists():
+    app.mount("/ui", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="frontend")
 
 class QueryInput(BaseModel):
     query: str

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RAG Document QA</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="setup-panel" aria-labelledby="setup-title">
+        <div>
+          <p class="eyebrow">Document workspace</p>
+          <h1 id="setup-title">RAG Document QA</h1>
+        </div>
+
+        <form id="upload-form" class="upload-form">
+          <label>
+            <span>User ID</span>
+            <input id="user-id" name="user_id" type="text" autocomplete="off" required />
+          </label>
+
+          <label>
+            <span>Chat ID</span>
+            <input id="chat-id" name="chat_id" type="text" autocomplete="off" required />
+          </label>
+
+          <label>
+            <span>PDF file</span>
+            <input id="pdf-file" name="file" type="file" accept="application/pdf,.pdf" required />
+          </label>
+
+          <button id="upload-button" type="submit">Upload PDF</button>
+          <p id="upload-status" class="status" role="status"></p>
+        </form>
+      </section>
+
+      <section id="chat-panel" class="chat-panel is-disabled" aria-labelledby="chat-title">
+        <header class="chat-header">
+          <div>
+            <p class="eyebrow">Ask from uploaded context</p>
+            <h2 id="chat-title">Chat</h2>
+          </div>
+          <button id="reset-button" type="button" class="secondary-button">New PDF</button>
+        </header>
+
+        <div id="messages" class="messages" aria-live="polite">
+          <article class="message assistant">
+            <div class="message-meta">Assistant</div>
+            <p>Upload a PDF to begin asking questions from its content.</p>
+          </article>
+        </div>
+
+        <form id="query-form" class="query-form">
+          <textarea
+            id="query-input"
+            rows="2"
+            placeholder="Ask a question about the uploaded PDF"
+            required
+            disabled
+          ></textarea>
+          <button id="query-button" type="submit" disabled>Send</button>
+        </form>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
