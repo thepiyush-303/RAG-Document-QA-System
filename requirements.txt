@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+google-genai
+qdrant-client
+python-dotenv
+python-multipart
+pypdf
+sentence-transformers
+langchain-text-splitters
+google-genai
